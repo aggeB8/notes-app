@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { marked } from 'marked'
 import { reactive } from 'vue'
 
 const fog = reactive({
     top: false,
     bottom: false
+})
+
+const text = reactive({
+    md: ''
 })
 
 const revealFog = (scrollEvent: any) => {
@@ -26,6 +31,7 @@ const revealFog = (scrollEvent: any) => {
 
 <template>
     <div class="flex h-full w-full flex-col overflow-hidden rounded-lg bg-slate-900 p-4">
+        <div class="flex flex-col text-slate-50" v-html="text.md"></div>
         <TransitionGroup>
             <div
                 v-if="fog.top"
@@ -40,6 +46,7 @@ const revealFog = (scrollEvent: any) => {
 
         <textarea
             @scroll="revealFog"
+            @input="(event) => (text.md = marked.parse(event.target.value))"
             class="h-full w-full resize-none border-none bg-inherit text-slate-400 outline-none"
         ></textarea>
     </div>
