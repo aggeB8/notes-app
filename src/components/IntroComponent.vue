@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center justify-center text-slate-400">
-        <p class="font-mono text-lg text-slate-500">a note app</p>
+        <p class="font-mono text-lg text-slate-500">an md-note app</p>
         <div class="grid grid-cols-[auto_auto] gap-3 p-3">
             <RouterLink to="/" class="justify-self-end leading-5">Create new note</RouterLink>
             <kbd

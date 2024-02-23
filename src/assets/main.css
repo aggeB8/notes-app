@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Markdown stuffs */
+
 @layer base {
     h1 {
         @apply text-5xl;
@@ -28,5 +30,11 @@
 
     ol {
         @apply list-decimal;
+    }
+
+    blockquote {
+        @apply border-l-4;
+        @apply border-slate-600;
+        @apply pl-2;
     }
 }

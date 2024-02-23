@@ -2,52 +2,34 @@
 import { marked } from 'marked'
 import { reactive } from 'vue'
 
-const fog = reactive({
-    top: false,
-    bottom: false
-})
+interface Text {
+    md: string | Promise<string>
+    rawInput: string
+}
 
-const text = reactive({
+const text: Text = reactive({
+    rawInput: '',
     md: ''
 })
 
-const revealFog = (scrollEvent: any) => {
-    const scrollTopRem = scrollEvent.target.scrollTop / 16
-    const scrollHeightRem = scrollEvent.target.scrollHeight / 16
-    const clientHeightRem = scrollEvent.target.clientHeight / 16
-
-    const revealAtRem = 5
-
-    if (scrollTopRem < revealAtRem) {
-        fog.top = false
-    } else if (scrollHeightRem - scrollTopRem - clientHeightRem < revealAtRem) {
-        fog.bottom = false
-    } else {
-        fog.top = true
-        fog.bottom = true
-    }
+const textToHTML = () => {
+    const html = marked.parse(text.rawInput)
+    text.md = html
 }
 </script>
 
 <template>
     <div class="flex h-full w-full flex-col overflow-hidden rounded-lg bg-slate-900 p-4">
-        <div class="flex flex-col text-slate-50" v-html="text.md"></div>
-        <TransitionGroup>
-            <div
-                v-if="fog.top"
-                class="fixed h-20 w-[calc(100%-4rem)] flex-shrink-0 bg-slate-900 gradient-mask-b-0"
-            />
-
-            <div
-                v-if="fog.bottom"
-                class="fixed bottom-8 h-20 w-[calc(100%-4rem)] flex-shrink-0 bg-slate-900 gradient-mask-t-0"
-            />
-        </TransitionGroup>
+        <!-- <div class="flex flex-col text-slate-50" v-html="text.md"></div> -->
+        <div class="h-10 w-full bg-slate-700">
+            <input placeholder="New note (2)" />
+            <button>Save</button>
+        </div>
 
         <textarea
-            @scroll="revealFog"
-            @input="(event) => (text.md = marked.parse(event.target.value))"
-            class="h-full w-full resize-none border-none bg-inherit text-slate-400 outline-none"
+            @input="textToHTML"
+            v-model="text.rawInput"
+            class="mt-2 h-full w-full resize-none border-none bg-inherit text-slate-400 outline-none"
         ></textarea>
     </div>
 </template>
