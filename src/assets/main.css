@@ -5,31 +5,70 @@
 /* Markdown stuffs */
 
 @layer base {
+    table {
+        @apply w-fit;
+    }
+
+    th {
+        @apply border border-t-0 border-slate-700 p-3 text-left;
+    }
+
+    th:first-child {
+        @apply border-l-0;
+    }
+
+    th:last-child {
+        @apply border-r-0;
+    }
+
+    td {
+        @apply border border-b-0 border-t-0 border-slate-700 p-3;
+    }
+
+    td:first-child {
+        @apply border-l-0;
+    }
+
+    td:last-child {
+        @apply border-r-0;
+    }
+
     h1 {
-        @apply text-5xl;
+        font-size: 2rem;
+        @apply font-semibold;
     }
+
     h2 {
-        @apply text-4xl;
+        font-size: 1.75rem;
+        @apply font-semibold;
     }
+
     h3 {
-        @apply text-3xl;
+        font-size: 1.6rem;
+        @apply font-semibold;
     }
+
     h4 {
-        @apply text-2xl;
+        font-size: 1.45rem;
+        @apply font-semibold;
     }
+
     h5 {
-        @apply text-xl;
+        font-size: 1.3rem;
+        @apply font-semibold;
     }
+
     h6 {
-        @apply text-lg;
+        font-size: 1.15rem;
+        @apply font-semibold;
     }
 
     ul {
-        @apply list-disc;
+        @apply list-disc px-8;
     }
 
     ol {
-        @apply list-decimal;
+        @apply list-decimal px-8;
     }
 
     blockquote {
