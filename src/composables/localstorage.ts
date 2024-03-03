@@ -3,13 +3,20 @@ import { getTitle } from './utils'
 const lsActions = {
     get: {
         specific: (id: number) => {
-            return JSON.parse(localStorage.getItem(id.toString()))
+            const getItem = localStorage.getItem(id.toString())
+
+            if (getItem !== null) {
+                return JSON.parse(getItem)
+            } else {
+                return `Item with ID ${id} doesn't exist`
+            }
         },
         all: () => {
             const lsData = { ...localStorage }
             const lsIds = Object.keys(lsData).map((id: string) => {
                 return Number(id)
             })
+
             return {
                 lsData: lsData,
                 lsIds: lsIds
