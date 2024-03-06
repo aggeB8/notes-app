@@ -4,7 +4,7 @@ import { useMagicKeys } from '@vueuse/core'
 import SearchComponent from '@/components/SearchComponent.vue'
 import router from './router'
 
-const { control, n, v } = useMagicKeys()
+const { control, n, v, h } = useMagicKeys()
 
 watchEffect(() => {
     if (control.value && n.value) {
@@ -12,6 +12,9 @@ watchEffect(() => {
     }
     if (control.value && v.value) {
         searching.value = !searching.value
+    }
+    if (control.value && h.value) {
+        router.push('/')
     }
 })
 

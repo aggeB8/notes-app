@@ -8,13 +8,7 @@ const props = defineProps({
     editId: Number
 })
 
-interface Text {
-    title: string
-    inputRaw: string
-    inputHTML: string
-}
-
-const text: Text = reactive({
+const noteObj = reactive({
     title: '',
     inputRaw: '',
     inputHTML: ''
@@ -28,18 +22,18 @@ if (props.editId === undefined) {
     currentNote = lsActions.get.latestId() + 1
 } else {
     currentNote = props.editId
-    text.title = lsActions.get.specific(currentNote).title
-    text.inputRaw = lsActions.get.specific(currentNote).inputRaw
+    noteObj.title = lsActions.get.specific(currentNote).title
+    noteObj.inputRaw = lsActions.get.specific(currentNote).inputRaw
 }
 
 const handleInput = async () => {
-    const html = await marked.parse(text.inputRaw, {
+    const html = await marked.parse(noteObj.inputRaw, {
         gfm: true,
         breaks: true
     })
-    text.inputHTML = html
+    noteObj.inputHTML = html
 
-    lsActions.save(currentNote, text.title, text.inputRaw)
+    lsActions.save(currentNote, noteObj.title, noteObj.inputRaw)
 }
 
 const menuActions = reactive({
@@ -68,7 +62,7 @@ const menuActions = reactive({
             <div class="flex flex-row gap-4">
                 <input
                     placeholder="New note"
-                    v-model="text.title"
+                    v-model="noteObj.title"
                     @input="handleInput"
                     class="flex-1 bg-slate-900 text-slate-400 focus:outline-none"
                 />
@@ -87,7 +81,7 @@ const menuActions = reactive({
             <textarea
                 ref="rawInputElement"
                 @input="handleInput"
-                v-model="text.inputRaw"
+                v-model="noteObj.inputRaw"
                 class="h-full w-full resize-none border-none bg-inherit font-mono text-sm outline-none"
             ></textarea>
         </div>
@@ -97,7 +91,7 @@ const menuActions = reactive({
         >
             <div
                 class="flex flex-col overflow-y-scroll break-words first:pt-0 [&>*]:py-0.5"
-                v-html="text.inputHTML"
+                v-html="noteObj.inputHTML"
             ></div>
         </div>
     </div>
