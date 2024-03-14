@@ -7,18 +7,20 @@ const search = ref()
 const searchNotes = () => {
     console.log(search.value.value)
 }
-
-const allNotes = lsActions.get.all().lsData
 </script>
 
 <template>
     <div
-        class="absolute top-8 w-80 rounded-md border border-indigo-900 bg-slate-900 p-2 text-slate-400"
+        class="absolute top-8 w-80 rounded-md border border-indigo-950 bg-slate-900 p-2 text-slate-400"
     >
-        <input class="w-full bg-slate-800" ref="search" @input="searchNotes" />
-        <div class="mt-2 flex flex-col gap-1">
-            <div v-for="item in allNotes" :key="item" class="bg-slate-800 p-1.5">
-                {{ JSON.parse(item).title }}
+        <input
+            class="w-full rounded-sm border border-indigo-900 bg-slate-800 focus:outline-none"
+            ref="search"
+            @input="searchNotes"
+        />
+        <div class="mt-2 flex max-h-44 flex-col overflow-auto">
+            <div v-for="note in lsActions.get.all().lsData" :key="note" class="p-1.5">
+                {{ JSON.parse(note).title }}
             </div>
         </div>
     </div>
